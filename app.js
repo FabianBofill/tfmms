@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const session = require('express-session');
+const bodyParser = require('body-parser');
 const MongoStore = require('connect-mongo')(session);
 
 
@@ -17,6 +18,10 @@ mongoose.connect(db, {useNewUrlParser:true})
 .then(()=>console.log('MongoDB conectado...'))
 .catch(err => console.log(err));
 var connection = mongoose.connection;
+
+//Bodyparser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //Express Session
 app.use(session({
@@ -40,8 +45,9 @@ app.use((req,res,next)=>{
 });
 
 //ROUTES
+app.get('/', (req, res) => res.send('Hello World!'));
+app.use('/escenario', require('./routes/escenario'));
 
 //Localhost puerto (levantar server)
 const port = 3000;
-app.get('/', (req, res) => res.send('Hello World!'));
 app.listen(port, () => console.log(`Express app running on port ${port}!`));
