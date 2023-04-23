@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const session = require('express-session');
+const csv = require('csv-parser');
 const bodyParser = require('body-parser');
 const MongoStore = require('connect-mongo')(session);
 
@@ -10,6 +11,7 @@ const MongoStore = require('connect-mongo')(session);
 
 
 const app = express();
+
 
 //DB
 const db = require('./config/db').MongoURI
@@ -47,6 +49,8 @@ app.use((req,res,next)=>{
 //ROUTES
 app.get('/', (req, res) => res.send('Hello World!'));
 app.use('/escenario', require('./routes/escenario'));
+app.use('/co2', require('./routes/co2'));
+
 
 //Localhost puerto (levantar server)
 const port = 3000;
