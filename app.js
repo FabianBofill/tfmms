@@ -59,6 +59,7 @@ app.get('/', function(req, res) {
 app.use('/escenario', require('./routes/escenario'));
 app.use('/co2', require('./routes/co2'));
 app.use('/emision', require('./routes/emision'));
+app.use('/heatmap', require('./routes/heatmap'));
 
 //Localhost puerto (levantar server)
 const port = 3000;

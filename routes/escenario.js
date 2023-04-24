@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('multer');
 
 const Escenario = require('../models/Escenario');
+
 
 let upload = multer();
 router.post('/saveEscenario', upload.single('csvFile'), (req, res) => {
@@ -46,6 +46,8 @@ router.post('/saveEscenario', upload.single('csvFile'), (req, res) => {
             };
         })
 });
+
+
 
 const convertCsvToJson = (csvText) => {
     const csvSplitted = csvText.split('\r\n');
