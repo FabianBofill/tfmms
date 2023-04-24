@@ -1,0 +1,10 @@
+Mongo 
+
+Inputs
+------
+
+Load GBA
+Load Emisiones
+Load Escenarios
+
+-------

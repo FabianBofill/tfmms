@@ -1,0 +1,119 @@
+.container {
+    background-color: var(--container-color);
+    border-radius: 40px;
+    box-shadow: 16px 16px 24px #d6d6f5;
+    display: flex;
+    padding: 3rem;
+    margin-bottom: 4rem;
+}
+
+.container h1 {
+    margin-top: 0 !important;
+}
+
+.container .left-wrapper {
+    flex-basis: 50%;
+    padding-right: 5rem;
+}
+
+.container .right-wrapper {
+    align-items: center;
+    border-radius: 0 40px 40px 0;
+    justify-content: center;
+    display: flex;
+    flex-basis: 50%;
+    padding-right: 1rem;
+    /* background-color: #efc0ca; */
+}
+
+.modal-description {
+    margin-top: 0.5rem;
+}
+
+.modal-footer-button {
+    padding: 17px 80px;
+}
+
+
+/* imagenes */
+
+.container img {
+    position: absolute;
+    width: 26rem;
+    height: 26rem;
+}
+
+
+/* stepbar modal */
+
+.container-stepbar {
+    display: block;
+}
+
+.container-stepbar-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 1.5rem 1.5rem 1rem;
+}
+
+.btn-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: .25rem;
+    border: none;
+    background-color: transparent;
+}
+
+.btn-close:hover {
+    background-color: var(--primary-color);
+}
+
+.btn-close:focus {
+    background-color: var(--primary-color);
+}
+
+
+/* animation */
+
+.fade-in {
+    animation-delay: 0.8s;
+    opacity: 0;
+    animation: fadeInAnimation 0.3s ease-in-out forwards;
+}
+
+.fade-out {
+    opacity: 1;
+    animation: fadeOutAnimation 0.4s ease-in-out forwards;
+}
+
+@keyframes fadeInAnimation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOutAnimation {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+
+/* media queries */
+
+@media (max-width: 810px) {
+    .container img {
+        width: 15rem;
+        height: 15rem;
+    }
+}
