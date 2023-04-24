@@ -50,6 +50,7 @@ app.use((req,res,next)=>{
 app.get('/', (req, res) => res.send('Hello World!'));
 app.use('/escenario', require('./routes/escenario'));
 app.use('/co2', require('./routes/co2'));
+app.use('/emision', require('./routes/emision'));
 
 
 //Localhost puerto (levantar server)
