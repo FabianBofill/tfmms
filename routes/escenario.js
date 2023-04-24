@@ -1,7 +1,10 @@
 const express = require ('express');
 const router = express.Router();
 
+
+
 const Escenario = require ('../models/Escenario');
+
 
 
 router.post('/saveEscenario',(req, res)=>{
@@ -47,6 +50,8 @@ router.post('/saveEscenario',(req, res)=>{
     })
 
 });
+
+
 
 
 
