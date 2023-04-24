@@ -1,7 +1,3 @@
-# modules
-node_modules/
-!node_modules/.package-lock.json
-
 # Logs
 logs
 *.log
@@ -16,6 +12,8 @@ pids
 *.pid.lock
 
 # Dependencies
+node_modules/
+!node_modules/.package-lock.json
 jspm_packages/
 
 # Distribution
