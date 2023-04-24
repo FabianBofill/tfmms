@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const session = require('express-session');
 const csv = require('csv-parser');
+const path = require('path');
 const bodyParser = require('body-parser');
 const MongoStore = require('connect-mongo')(session);
 
@@ -11,6 +12,7 @@ const MongoStore = require('connect-mongo')(session);
 
 
 const app = express();
+app.use(express.static(path.join(__dirname, 'app')));
 
 
 //DB
@@ -47,7 +49,11 @@ app.use((req,res,next)=>{
 });
 
 //ROUTES
-app.get('/', (req, res) => res.send('Hello World!'));
+
+app.get('/', function(req, res) {
+    res.sendFile(__dirname + '/app/index.html');
+  });
+//app.get('/', (req, res) => res.send('Hello World!'));
 app.use('/escenario', require('./routes/escenario'));
 app.use('/co2', require('./routes/co2'));
 app.use('/emision', require('./routes/emision'));
