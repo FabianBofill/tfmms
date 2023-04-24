@@ -41,6 +41,12 @@ app.use((req, res, next) => {
     res.locals.success_msg = req.flash('success_msg');
     res.locals.error_msg = req.flash('error_msg');
     res.locals.error = req.flash('error');
+
+    //CORS
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
     next();
 });
 
@@ -48,7 +54,7 @@ app.use((req, res, next) => {
 
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/app/index.html');
-  });
+});
 //app.get('/', (req, res) => res.send('Hello World!'));
 app.use('/escenario', require('./routes/escenario'));
 app.use('/co2', require('./routes/co2'));

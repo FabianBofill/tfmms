@@ -27,8 +27,9 @@ nextStepButton.addEventListener('click', (e) => {
     let nextStep = currentStep + 1;
     const nextStepItem = document.querySelector('.step[attr-step-number="' + nextStep + '"]');
 
-    if (nextStep == 2) {
+    if (nextStep === 2) {
         backStepButton.classList.remove('opacity-0');
+        SERVICE_ENDPOINT = 'escenario/saveEscenario';
     }
 
     nextStepItem.classList.add('step--current');
@@ -55,8 +56,10 @@ backStepButton.addEventListener('click', (e) => {
     let prevtStep = currentStep - 1;
     const prevtStepItem = document.querySelector('.step[attr-step-number="' + prevtStep + '"]');
 
-    if (prevtStep == 1) {
+    if (prevtStep === 1) {
         backStepButton.classList.add('opacity-0');
+    } else if (prevStep === 2) {
+        SERVICE_ENDPOINT = 'escenario/saveEscenario';
     }
 
     prevtStepItem.classList.add('step--current');

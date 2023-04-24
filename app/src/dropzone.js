@@ -7,7 +7,6 @@ clickingHereTexts.forEach((clickingHereText) => {
     });
 });
 
-
 /////////////////// Drag and drop events ///////////////////
 const dropzones = document.querySelectorAll('.dropzone-upload-area');
 dropzones.forEach((dropzone) => {
@@ -19,7 +18,6 @@ dropzones.forEach((dropzone) => {
         if (!files.length) { return; }
 
         const maxFilesLimit = dropzone.getAttribute('attr-max-files');
-        console.log(maxFilesLimit);
         if (files.length + (dropzoneItems.length || 0) > maxFilesLimit) {
             alert('You are trying to upload a number of files than exceeds the limit.');
             return;
@@ -65,7 +63,7 @@ dropzones.forEach((dropzone) => {
 // AJAX request to upload files to the server
 function uploadFile(dropzone, file) {
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://127.0.0.1:3000/inputs/saveInputs");
+    xhr.open("POST", "http://127.0.0.1:3000/" + SERVICE_ENDPOINT, true);
 
     // Create HTML element
     const filesUploaderArea = dropzone.parentElement.querySelector('.dropzone-files-uploaded');
@@ -93,34 +91,41 @@ function uploadFile(dropzone, file) {
         }
     });
 
+
     // TODO: Borrar - solo para pruebas
-    let progress = 10;
-    let interval = setInterval(() => {
-        let loaded = progress;
-        let total = 2000000;
-        progress = progress * 5;
-        let fileLoaded = Math.floor((loaded / total) * 100);
-        let fileTotal = Math.floor(total / 1000);
+    // let progress = 10;
+    // let interval = setInterval(() => {
+    //     let loaded = progress;
+    //     let total = 2000000;
+    //     progress = progress * 5;
+    //     let fileLoaded = Math.floor((loaded / total) * 100);
+    //     let fileTotal = Math.floor(total / 1000);
 
-        fileItemSelector.querySelector('.file-uplading-percent').textContent = fileLoaded + '%';
-        fileItemSelector.querySelector('.file-progress-bar').style.width = fileLoaded + '%';
+    //     fileItemSelector.querySelector('.file-uplading-percent').textContent = fileLoaded + '%';
+    //     fileItemSelector.querySelector('.file-progress-bar').style.width = fileLoaded + '%';
 
-        if (loaded >= total) {
-            fileItemSelector.querySelector('.file-status').textContent = 'Uploaded';
-            fileItemSelector.querySelector('.dropzone-file-upload-progress-bar').remove();
+    //     if (loaded >= total) {
+    //         fileItemSelector.querySelector('.file-status').textContent = 'Uploaded';
+    //         fileItemSelector.querySelector('.dropzone-file-upload-progress-bar').remove();
 
-            let fileSize = (fileTotal < 1024) ? fileTotal + ' KB' : (loaded / (1024 * 1024)).toFixed(2) + ' MB';
-            fileItemSelector.querySelector('.file-size').classList.remove('hide');
-            fileItemSelector.querySelector('.file-size').textContent = fileSize;
-            fileItemSelector.querySelector('.file-uplading-percent').textContent = '100%';
-            clearInterval(interval);
-        }
-    }, 250);
+    //         let fileSize = (fileTotal < 1024) ? fileTotal + ' KB' : (loaded / (1024 * 1024)).toFixed(2) + ' MB';
+    //         fileItemSelector.querySelector('.file-size').classList.remove('hide');
+    //         fileItemSelector.querySelector('.file-size').textContent = fileSize;
+    //         fileItemSelector.querySelector('.file-uplading-percent').textContent = '100%';
+    //         clearInterval(interval);
+    //     }
+    // }, 250);
 
     var formData = new FormData();
-    // concatenar timestamp
-    formData.append("uploads", file.data);
-    // xhr.send(formData);
+    let userData = {
+        firstName: "ABC",
+        lastName: "DEF",
+        //userFormData: formData
+    }
+    console.log(file);
+    // xhr.setRequestHeader("Content-Type", "multipart/form-data");
+    formData.append("csvFile", file);
+    xhr.send(formData);
 }
 
 function createUploadItemHTML(fileName) {

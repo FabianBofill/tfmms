@@ -1,3 +1,5 @@
+let SERVICE_ENDPOINT = '';
+
 // Add disbled class to titleHeatmapContainer if there is no items
 const titleHeatmapContainer = document.querySelector('.container-heatmap-list .title-h2');
 const hasHeatmapItems = document.querySelectorAll('.container-no-heatmap-items').length;
