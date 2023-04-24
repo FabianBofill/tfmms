@@ -20,4 +20,8 @@ OBS_FLAG: String
 
 
 const CO2=mongoose.model('Co2', Co2Schema);
+<<<<<<< HEAD
 module.exports =CO2;
+=======
+module.exports =CO2;
+>>>>>>> 877cfd12088ca76415c7277a62c4fe74e2c75477
