@@ -12,6 +12,20 @@ const heatmapView = document.querySelector('.wrapper-heatmap-view');
 const heatmapCreateView = document.querySelector('.wrapper-create-heatmap-view')
 
 buttonCreateHeatMap.addEventListener('click', () => {
+    // reset view
+    const fileItems = document.querySelectorAll('.dropzone-file-upload-item');
+    fileItems.forEach((file) => {
+        file.remove();
+    });
+    document.querySelector('.step--current').classList.remove('step--current');
+    document.querySelector('.step[attr-step-number="1"]').classList.add('step--current');
+
+    const containersStepbarBody = document.querySelectorAll('.container-stepbar-body');
+    containersStepbarBody.forEach((containerBody) => {
+        containerBody.classList.add('hide');
+    });
+    document.querySelector('.container-stepbar-body[attr-content-number="1"]').classList.remove('hide');
+
     // remove old animation classes
     document.querySelectorAll('.animation').forEach(el => {
         el.classList.remove('animation', 'fade-in', 'fade-out')

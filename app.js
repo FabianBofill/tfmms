@@ -7,20 +7,16 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const MongoStore = require('connect-mongo')(session);
 
-
-
-
-
 const app = express();
 app.use(express.static(path.join(__dirname, 'app')));
 
-
 //DB
 const db = require('./config/db').MongoURI
+
 //Conectar Mongo
-mongoose.connect(db, {useNewUrlParser:true})
-.then(()=>console.log('MongoDB conectado...'))
-.catch(err => console.log(err));
+mongoose.connect(db, { useNewUrlParser: true })
+    .then(() => console.log('MongoDB conectado...'))
+    .catch(err => console.log(err));
 var connection = mongoose.connection;
 
 //Bodyparser
@@ -32,19 +28,19 @@ app.use(session({
     secret: 'secret',
     resave: true,
     saveUninitialized: true,
-    store   : new MongoStore({
-      mongooseConnection: connection
+    store: new MongoStore({
+        mongooseConnection: connection
     })
-  }));
+}));
 
-  //Connect Flash
+//Connect Flash
 app.use(flash());
 
 //Variables globales
-app.use((req,res,next)=>{
-    res.locals.success_msg=req.flash('success_msg');
-    res.locals.error_msg=req.flash('error_msg');
-    res.locals.error=req.flash('error');
+app.use((req, res, next) => {
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+    res.locals.error = req.flash('error');
     next();
 });
 
@@ -58,7 +54,6 @@ app.use('/escenario', require('./routes/escenario'));
 app.use('/co2', require('./routes/co2'));
 app.use('/emision', require('./routes/emision'));
 app.use('/heatmap', require('./routes/heatmap'));
-
 
 //Localhost puerto (levantar server)
 const port = 3000;
