@@ -5,18 +5,21 @@ const multer = require('multer');
 const Escenario = require('../models/Escenario');
 
 let upload = multer();
-router.post('/saveEscenario', upload.single('csvFile'), (req, res) => {
+router.post('/saveEscenario', upload.single('escenario'), (req, res) => {
+    const idHeatmap = req.body.Idheatmap;
     let myCSV = req.file.buffer.toString('utf8');
     let jsonFile = convertCsvToJson(myCSV);
-    const { model, name, region, variable, unit, values } = jsonFile;
+    const { model, name, region, variable, unit, steps } = jsonFile;
 
     //Validacion escenario
     const key = {
         model: model,
         name: name,
         region: region,
-        variable: variable
+        variable: variable,
+        IdHeatmap:idHeatmap
     };
+    
 
     Escenario.findOne(key)
         .then(escenario => {
@@ -33,10 +36,10 @@ router.post('/saveEscenario', upload.single('csvFile'), (req, res) => {
                     region,
                     variable,
                     unit,
-                    values
+                    steps,
+                    IdHeatmap:idHeatmap
 
                 });
-                console.log(newEscenario);
 
                 newEscenario.save()
                     .then(escenario => {
@@ -69,12 +72,12 @@ const convertYearsToJson = (headerSplitted, rowSplitted) => {
 
     return columnNames.reduce((acc, currentValue, idx) => {
         return {
-            "values": [
-                ...acc["values"],
-                { "year": currentValue, "value": fields[idx] }
+            "steps": [
+                ...acc["steps"],
+                { "year": currentValue, "rate": fields[idx] }
             ]
         }
-    }, { "values": [] })
+    }, { "steps": [] })
 };
 
 module.exports = router;

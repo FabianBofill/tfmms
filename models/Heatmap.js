@@ -14,7 +14,8 @@ const heatmapSchema = new mongoose.Schema({
     data: [[{
       type: Number,
       required: true,
-    }]]
+    }]],
+    IdHeatmap:{type:String}
   });
   
   // Create the Mongoose model for the heatmap

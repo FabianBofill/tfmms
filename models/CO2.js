@@ -13,7 +13,8 @@ const Co2Schema = new mongoose.Schema({
     geo: String,
     TIME_PERIOD: String,
     OBS_VALUE: String,
-    OBS_FLAG: String
+    OBS_FLAG: String,
+    IdHeatmap:String
 });
 
 

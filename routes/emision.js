@@ -9,7 +9,9 @@ const EmisionCost = require ('../models/EmisionCost');
 // configure multer to handle file uploads
 const upload = multer({ dest: 'uploads/' });
 
-router.post('/saveEmision', upload.single('EmisionCost'),(req, res)=>{
+router.post('/saveEmision', upload.single('EmisionCost'), (req, res) => {
+  const idHeatmap = req.body.Idheatmap;
+
 
     fs.createReadStream(req.file.path)
     .pipe(csv())
@@ -20,7 +22,8 @@ router.post('/saveEmision', upload.single('EmisionCost'),(req, res)=>{
         Country: row.Country,
         Assumption: row.Assumption,
         SubSector: row.SubSector,
-        Factor: row.Factor
+        Factor: row.Factor,
+        IdHeatmap:idHeatmap
       });
 
       // save the document to the database
@@ -40,7 +43,7 @@ router.post('/saveEmision', upload.single('EmisionCost'),(req, res)=>{
      })
      .on('end', () => {
        res.send('Data saved to the database!');
-     });
+      });
 
 
 });
