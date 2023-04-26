@@ -58,7 +58,7 @@ backStepButton.addEventListener('click', (e) => {
 
     if (prevtStep === 1) {
         backStepButton.classList.add('opacity-0');
-    } else if (prevStep === 2) {
+    } else if (prevtStep === 2) {
         SERVICE_ENDPOINT = 'escenario/saveEscenario';
     }
 
