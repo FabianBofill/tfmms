@@ -1,23 +1,3 @@
-const { Timestamp } = require('bson');
-const mongoose = require('mongoose');
-Schema = mongoose.Schema;
-
-
-const emisisionCostSchema = new mongoose.Schema({
-    Country: String,
-    Assumption: String,
-    SubSector: String,
-    Factor: Number,
-    IdHeatmap:String
-});
-
-
-const EmisionCost=mongoose.model('emisisionCost', emisisionCostSchema);
-module.exports =EmisionCost;
-
-/*
-CSV Example
-
 Country,Asumptions,SubSector,Factor
 Slovenia,,D35,4.437115249
 Slovenia,,C23,3.057319971
@@ -37,6 +17,3 @@ Slovenia,,G47,0.100729769
 Slovenia,0.277100081,F41,0.,096872921
 Slovenia,0.328885239,I55,0.071884604
 Slovenia,,L68,0.016320268
-
-
-*/

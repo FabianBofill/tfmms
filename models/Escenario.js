@@ -23,14 +23,15 @@ const EscenarioSchema = new mongoose.Schema({
     unit:{
         type: String
     },
-    values: [{
+    steps: [{
         year: {
           type: Number
         },
-        value: {
+        rate : {
           type: Number
         }
-      }]
+      }],
+      IdHeatmap:{ type: String}
 });
 
 const Escenario=mongoose.model('Escenario', EscenarioSchema);
