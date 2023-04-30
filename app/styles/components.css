@@ -103,7 +103,7 @@ button:hover>svg {
 }
 
 .container-stepbar {
-    margin-top: -2.5rem;
+    /* margin-top: -1rem; */
     min-height: 62vh;
 }
 
@@ -112,6 +112,8 @@ button:hover>svg {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-left: 75px;
+    margin-left: 32px;
     padding: 1rem 0 1.5rem 0;
 }
 
@@ -119,11 +121,17 @@ button:hover>svg {
     align-items: center;
     justify-content: center;
     display: flex;
+    margin-left: 75px;
+    margin-left: 32px;
     padding: 0 7rem
 }
 
 
 /* stepbar */
+
+.stepbar {
+    z-index: 1;
+}
 
 .step-bar {
     display: flex;
@@ -157,18 +165,18 @@ button:hover>svg {
     height: 2rem;
     line-height: 2rem;
     text-align: center;
-    z-index: 1;
     width: 2rem;
 }
 
 .step+.step .step__bullet:before {
+    background-color: var(--primary-color);
     content: "";
-    position: absolute;
     height: 3px;
-    width: calc(100% - 2rem - 2px);
+    position: absolute;
     top: 1rem;
     right: calc(50% + 2rem / 2);
-    background-color: var(--primary-color);
+    width: calc(100% - 1.5rem);
+    z-index: -1;
 }
 
 .step--current~.step {
@@ -183,7 +191,6 @@ button:hover>svg {
     border-color: var(--modal-tertiary-color);
     background-color: white;
     color: var(--stepbar-text-color);
-    z-index: 0;
 }
 
 .step--current~.step .step__bullet::before {

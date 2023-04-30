@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="./styles/header.css" />
     <link rel="stylesheet" href="./styles/modal.css" />
     <link rel="stylesheet" href="./styles/components.css" />
+    <link rel="stylesheet" href="./styles/form.css" />
+    <link rel="stylesheet" href="./styles/heatmap.css" />
 </head>
 
 <body>
@@ -21,8 +23,6 @@
                 <ul>
                     <li class="nav-item"><a href="#">Direct Emission</a></li>
                     <li class="nav-item"><a href="#">Indirect Emission</a></li>
-                    <li class="nav-item"><a href="#">Expediture</a></li>
-                    <li class="nav-item"><a href="#">Revenue</a></li>
                     <li>
                         <a href="#"></a>
                     </li>
@@ -48,16 +48,6 @@
                 <div class="right-wrapper">
                     <img src="./assets/jumbo-05.png" alt="img-grafico-05" />
                 </div>
-            </div>
-
-            <!-- Heatmap List -->
-            <div class="container container-heatmap-list">
-                <h2 class="title-h2">Your Direct Emission Heatmaps</h2>
-                <div class="container-no-heatmap-items">
-                    <img src="./assets/lupa.svg" alt="img-no-items" />
-                    <p>You have not created any heatmap yet</p>
-                </div>
-                <div class="container-heatmap-items"></div>
             </div>
         </div>
 
@@ -87,7 +77,7 @@
                             </li>
                             <li class="step" attr-step-number="3">
                                 <span class="step__bullet">3</span>
-                                <span class="step__title">Settings</span>
+                                <span class="step__title">Deltas</span>
                             </li>
                             <li class="step" attr-step-number="4">
                                 <span class="step__bullet icon icon-martop-4">
@@ -142,10 +132,51 @@
 
                 <!-- Content step 3-->
                 <div class="container-stepbar-body hide" attr-content-number="3">
+                    <!-- Title -->
+                    <h2 class="title-h2 margin-0">Configure delta sensitivity</h2>
+                    <p class="modal-description">The sensitivities will be displayed with different colors on the heatmap</p>
+                    <!-- Form -->
+                    <div class="form-container">
+                        <form class="form">
+                            <div class="credit-card-info--form">
+                                <div class="input_container">
+                                    <label for="password_field" class="input_label">Card holder full name</label>
+                                    <input id="password_field" class="input_field" type="text" name="input-name" title="Inpit title" placeholder="Enter your full name">
+                                </div>
+                            </div>
+
+                            <div class="credit-card-info--form">
+                                <div class="input_container">
+                                    <label for="password_field" class="input_label">Card holder full name</label>
+                                    <input id="password_field" class="input_field" type="text" name="input-name" title="Inpit title" placeholder="Enter your full name">
+                                </div>
+                            </div>
+
+                            <div class="credit-card-info--form">
+                                <div class="input_container">
+                                    <label for="password_field" class="input_label">Card holder full name</label>
+                                    <input id="password_field" class="input_field" type="text" name="input-name" title="Inpit title" placeholder="Enter your full name">
+                                </div>
+                            </div>
+
+                            <div class="credit-card-info--form">
+                                <div class="input_container">
+                                    <label for="password_field" class="input_label">Card holder full name</label>
+                                    <input id="password_field" class="input_field" type="text" name="input-name" title="Inpit title" placeholder="Enter your full name">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
                 <!-- Content step 4-->
                 <div class="container-stepbar-body hide" attr-content-number="4">
+                    <!-- Title -->
+                    <h2 class="title-h2 margin-0">Here is your direct emission heatmap!</h2>
+                    <!-- Heatmap -->
+                    <figure class="highcharts-figure">
+                        <div id="container"></div>
+                    </figure>
                 </div>
 
                 <!-- Footer  -->
@@ -158,10 +189,16 @@
 
     <script src="/src/main.js "></script>
     <script src="/src/header.js "></script>
-
+    <!-- Components -->
     <script src="/src/stepbar-modal.js "></script>
     <script src="/src/dropzone.js " async></script>
     <script src="/assets/svg.js " async></script>
+    <!-- Highcharts -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/heatmap.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="/src/heatmap.js"></script>
 </body>
 
 </html>
