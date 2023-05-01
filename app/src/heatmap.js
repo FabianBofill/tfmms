@@ -1,3 +1,71 @@
+const objetoEjemplo = {
+    'nace01': [{ 'scenario': 2025, 'value': 10 }, { 'scenario': 2030, 'value': 40 }, { 'scenario': 2040, 'value': 60 }, { 'scenario': 2050, 'value': 83 }],
+    'nace02': [{ 'scenario': 2025, 'value': 20 }, { 'scenario': 2030, 'value': 20 }, { 'scenario': 2040, 'value': 50 }, { 'scenario': 2050, 'value': 93 }],
+    'nace03': [{ 'scenario': 2025, 'value': 30 }, { 'scenario': 2030, 'value': 90 }, { 'scenario': 2040, 'value': 40 }, { 'scenario': 2050, 'value': 13 }],
+    'nace04': [{ 'scenario': 2025, 'value': 40 }, { 'scenario': 2030, 'value': 10 }, { 'scenario': 2040, 'value': 30 }, { 'scenario': 2050, 'value': 23 }],
+    'nace05': [{ 'scenario': 2025, 'value': 70 }, { 'scenario': 2030, 'value': 80 }, { 'scenario': 2040, 'value': 20 }, { 'scenario': 2050, 'value': 63 }],
+    'nace06': [{ 'scenario': 2025, 'value': 80 }, { 'scenario': 2030, 'value': 30 }, { 'scenario': 2040, 'value': 10 }, { 'scenario': 2050, 'value': 73 }]
+};
+
+// continue button onclick
+nextStepButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    const currentStepItem = document.querySelector('.step--current');
+
+    let currentStep = parseInt(currentStepItem.getAttribute('attr-step-number'));
+    // Si no es el paso final
+    if (currentStep !== 4) return;
+
+    const deltaItems = Array.from(document.getElementsByClassName('input_delta'));
+    let deltas = deltaItems.reduce((acc, el) => {
+        acc.push(el.value);
+        return acc;
+    }, []);
+
+    let data = objetoEjemplo;
+    let dataTransformed = transformDataToHeatmap(data);
+    let categories = getCategories(data); // [x, y]
+    console.log(dataTransformed);
+    console.log(categories);
+    loadChart(deltas, dataTransformed, categories[0], categories[1]);
+});
+
+function transformDataToHeatmap(obj) {
+    let heatmapMatrix = [];
+    let y = 0;
+
+    for (let key in obj) {
+        obj[key].forEach((el, idx) => {
+            heatmapMatrix.push([idx, y, el.value]);
+        });
+        y++;
+    }
+
+    return heatmapMatrix;
+}
+
+function getCategories(obj) {
+    let categories = [
+        [],
+        []
+    ];
+    let categorieXScanned = false;
+
+    for (let categorieY in obj) {
+        categories[1].push(categorieY);
+
+        if (!categorieXScanned) {
+            obj[categorieY].forEach((el) => {
+                categories[0].push(el.scenario);
+            });
+            categorieXScanned = true;
+        }
+    }
+
+    return categories;
+}
+
+// Highcharts Functions
 Highcharts.SVGRenderer.prototype.symbols.download = function(x, y, w, h) {
     var path = [
         'M', x + w * 0.5, y,
@@ -20,155 +88,102 @@ function getPointCategoryName(point, dimension) {
     return axis.categories[point[isY ? 'y' : 'x']];
 }
 
-Highcharts.chart('container', {
-    chart: {
-        type: 'heatmap',
-        marginTop: 40,
-        marginBottom: 80,
-        plotBorderWidth: 0
-    },
+function loadChart(deltas, data, categoriesX, categoriesY) {
+    Highcharts.chart('container', {
+        chart: {
+            type: 'heatmap',
+            marginTop: 40,
+            marginBottom: 100,
+            plotBorderWidth: 0
+        },
 
-    title: {
-        text: ''
-    },
+        title: {
+            text: ''
+        },
 
-    xAxis: {
-        categories: ['Alexander', 'Marie', 'Maximilian', 'Sophia', 'Lukas', 'Maria', 'Leon', 'Anna', 'Tim', 'Laura']
-    },
+        xAxis: {
+            categories: categoriesX
+        },
 
-    yAxis: {
-        categories: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-        title: null,
-        reversed: true
-    },
+        yAxis: {
+            categories: categoriesY,
+            title: null,
+            reversed: true
+        },
 
-    accessibility: {
-        enabled: false
-    },
+        accessibility: {
+            enabled: false
+        },
 
-    colorAxis: {
-        dataClasses: [{
-            color: '#ffffff',
-            to: 1
-        }, {
-            color: '#fffdd0',
-            from: 1,
-            to: 30
-        }, {
-            color: '#f5ef2f',
-            from: 30,
-            to: 70
-        }, {
-            color: '#e06666',
-            from: 70,
-            to: 85
-        }, {
-            color: '#cc0000',
-            from: 85
-        }]
-    },
+        colorAxis: {
+            dataClasses: [{
+                color: '#ffffff',
+                to: 1
+            }, {
+                color: '#fffdd0',
+                from: 1,
+                to: deltas[0]
+            }, {
+                color: '#ffff76 ',
+                from: deltas[0],
+                to: deltas[1]
+            }, {
+                color: '#FFD700',
+                from: deltas[1],
+                to: deltas[2]
+            }, {
+                color: '#e06666',
+                from: deltas[2],
+                to: deltas[3]
+            }, {
+                color: '#cc0000',
+                from: deltas[3]
+            }]
+        },
 
-    legend: {
-        margin: 0,
-    },
-
-    exporting: {
-        buttons: {
-            contextButton: {
-                // align: 'left',
-                // x: -100,
-                symbol: 'download',
-                verticalAlign: 'top',
-                y: -19,
-                fill: "#e7e7f8"
+        exporting: {
+            buttons: {
+                contextButton: {
+                    symbol: 'download',
+                    verticalAlign: 'top',
+                    y: -19,
+                    fill: "#e7e7f8"
+                }
             }
-        }
-    },
+        },
 
-    tooltip: {
-        formatter: function() {
-            return '<b>' + getPointCategoryName(this.point, 'x') + '</b> sold <br><b>' +
-                this.point.value + '</b> items on <br><b>' + getPointCategoryName(this.point, 'y') + '</b>';
-        }
-    },
+        tooltip: {
+            formatter: function() {
+                return 'Prevission for <b>' + getPointCategoryName(this.point, 'y') + '</b><br> in <b>' + getPointCategoryName(this.point, 'x') + '</b> is ' + this.point.value;
+            }
+        },
 
-    series: [{
-        name: 'direct emission risk',
-        borderWidth: 1,
-        borderColor: '#e7e7f8',
-        data: [
-            [0, 0, 0],
-            [0, 1, 10],
-            [0, 2, 20],
-            [0, 3, 24],
-            [0, 4, 67],
-            [1, 0, 92],
-            [1, 1, 58],
-            [1, 2, 78],
-            [1, 3, 100],
-            [1, 4, 48],
-            [2, 0, 35],
-            [2, 1, 15],
-            [2, 2, 100],
-            [2, 3, 64],
-            [2, 4, 52],
-            [3, 0, 72],
-            [3, 1, 100],
-            [3, 2, 100],
-            [3, 3, 19],
-            [3, 4, 16],
-            [4, 0, 38],
-            [4, 1, 5],
-            [4, 2, 8],
-            [4, 3, 100],
-            [4, 4, 100],
-            [5, 0, 88],
-            [5, 1, 32],
-            [5, 2, 12],
-            [5, 3, 6],
-            [5, 4, 100],
-            [6, 0, 13],
-            [6, 1, 44],
-            [6, 2, 88],
-            [6, 3, 98],
-            [6, 4, 96],
-            [7, 0, 31],
-            [7, 1, 1],
-            [7, 2, 82],
-            [7, 3, 32],
-            [7, 4, 30],
-            [8, 0, 85],
-            [8, 1, 97],
-            [8, 2, 100],
-            [8, 3, 64],
-            [8, 4, 84],
-            [9, 0, 47],
-            [9, 1, 100],
-            [9, 2, 31],
-            [9, 3, 48],
-            [9, 4, 91]
-        ],
-        dataLabels: {
-            enabled: false,
-            color: '#000000'
-        }
-    }],
+        series: [{
+            name: 'direct emission risk',
+            borderWidth: 1,
+            borderColor: '#4c4c4c ',
+            data: data,
+            dataLabels: {
+                enabled: false,
+                color: '#000000'
+            }
+        }],
 
-    responsive: {
-        rules: [{
-            condition: {
-                maxWidth: 500
-            },
-            chartOptions: {
-                yAxis: {
-                    labels: {
-                        formatter: function() {
-                            return this.value.charAt(0);
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    yAxis: {
+                        labels: {
+                            formatter: function() {
+                                return this.value.charAt(0);
+                            }
                         }
                     }
                 }
-            }
-        }]
-    }
-
-});
+            }]
+        }
+    });
+};

@@ -30,6 +30,8 @@ nextStepButton.addEventListener('click', (e) => {
     if (nextStep === 2) {
         backStepButton.classList.remove('opacity-0');
         SERVICE_ENDPOINT = 'escenario/saveEscenario';
+    } else if (nextStep === 4) {
+        continueButton.classList.add('opacity-0');
     }
 
     nextStepItem.classList.add('step--current');
@@ -46,8 +48,9 @@ nextStepButton.addEventListener('click', (e) => {
     nextContent.classList.add('fade-in');
 });
 
-// Back button
+// Back button onclick
 const backStepButton = document.querySelector('.back-wrapper');
+const continueButton = document.querySelector('.continue-button');
 backStepButton.addEventListener('click', (e) => {
     e.preventDefault();
     const currentStepItem = document.querySelector('.step--current');
@@ -60,6 +63,8 @@ backStepButton.addEventListener('click', (e) => {
         backStepButton.classList.add('opacity-0');
     } else if (prevtStep === 2) {
         SERVICE_ENDPOINT = 'escenario/saveEscenario';
+    } else if (prevtStep === 3) {
+        continueButton.classList.remove('opacity-0');
     }
 
     prevtStepItem.classList.add('step--current');
