@@ -16,57 +16,84 @@ router.post('/createHeatmap',(req, res)=>{
         if (err) {
           console.log('Error: ', err);
         } else {
+          /*VARIABLES*/ 
           const subsectorFactorsMap = new Map();
-          docs.forEach((doc) => {
-            const subsector = doc.SubSector;
-            const factor = doc.Factor;
-            if (subsectorFactorsMap.has(subsector)) {
-              const factors = subsectorFactorsMap.get(subsector);
-              factors.push(factor);
-              subsectorFactorsMap.set(subsector, factors);
-            } else {
-              subsectorFactorsMap.set(subsector, [factor]);
+          let totalFactor=0;
+          const escenariopMap = new Map();
+          /*FIND SCENARIO*/ 
+          Escenario.findOne({IdHeatmap: Idheatmap},(err,esc)=>{
+          if (err) {
+            console.log('Error: ', err);
+          } else {
+            const steps = esc.steps;
+            for (let i = 0; i < steps.length; i++) {
+              const year = steps[i].year;
+              const rate = steps[i].rate;
+              escenariopMap.set(year, rate);
             }
-          });
-          console.log(subsectorFactorsMap);
-        }
+          }
         
-      });
+        /*FIND SECTORS*/   
+        docs.forEach((doc) => {
+          const subsector = doc.SubSector;
+          const factor = doc.Factor;
+          if (subsectorFactorsMap.has(subsector)) {
+            const factors = subsectorFactorsMap.get(subsector);
+            //factors.push(factor);
+            factors.percentage = factor; // Store the new factor as the second value
+            subsectorFactorsMap.set(subsector, factors);
+          } else {
+            subsectorFactorsMap.set(subsector, { factor: factor }); // Store the first factor as a property of an object
+            //subsectorFactorsMap.set(subsector, [factor]);
+            totalFactor+=factor;
+          }
+        });
+        /*END FIND SECTORS*/  
+        const yearsSet=[];
+        
 
+        subsectorFactorsMap.forEach(function(key, value){
+         
+          key.percentage=key.factor/totalFactor;  
+          // const newValue=value;
+            escenariopMap.forEach(function(rate, year){
+              if(!yearsSet.includes(year)){
+                yearsSet.push(year);
+              }
+             key[year]=rate*key.factor; 
+            });  
+           
+         });
+         
+         let resHeat={};
+         subsectorFactorsMap.forEach(function(key, value){
+          for (let i = 0; i < yearsSet.length-1; i++) { 
+            key[yearsSet[i+1]]=(((yearsSet[i+1]-yearsSet[i])/yearsSet[i])*key.percentage) ;
+          } 
 
-      Escenario.findOne({IdHeatmap: Idheatmap},(err,esc)=>{
-        if (err) {
-          console.log('Error: ', err);
-        } else {
-           const escenariopMap = new Map();
-           const steps = esc.steps;
-           for (let i = 0; i < steps.length; i++) {
-             const year = steps[i].year;
-             const rate = steps[i].rate;
-             escenariopMap.set(year, rate);
-           }
-           console.log(escenariopMap);
+         });
+         
+         for (let [key, value] of subsectorFactorsMap) {
+          let dataArray = [];
+          for (let i = 1; i < yearsSet.length; i++) { 
+            let dataObject={'scenario':yearsSet[i], 'value':value[yearsSet[i]]}; 
+          
+            dataArray.push(dataObject);
+          } 
+          resHeat[key]=dataArray;
+
          }
+
+         
+          console.log(resHeat);
+          res.json(resHeat);
+
+        });
+        }     
       });
+
 
     
-      
-    //   function createMatrix(map1, map2) {
-    //     const matrix = [];
-      
-    //     map1.forEach((factors, subsector) => {
-    //       const row = [];
-      
-    //       map2.forEach((rate, escenario) => {
-    //         const value = factors.reduce((acc, factor) => acc + factor * rate, 0);
-    //         row.push(value);
-    //       });
-      
-    //       matrix.push(row);
-    //     });
-      
-    //     return matrix;
-    //   }
 
 
 
