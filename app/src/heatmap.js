@@ -1,11 +1,11 @@
-const objetoEjemplo = {
-    'nace01': [{ 'scenario': 2025, 'value': 10 }, { 'scenario': 2030, 'value': 40 }, { 'scenario': 2040, 'value': 60 }, { 'scenario': 2050, 'value': 83 }],
-    'nace02': [{ 'scenario': 2025, 'value': 20 }, { 'scenario': 2030, 'value': 20 }, { 'scenario': 2040, 'value': 50 }, { 'scenario': 2050, 'value': 93 }],
-    'nace03': [{ 'scenario': 2025, 'value': 30 }, { 'scenario': 2030, 'value': 90 }, { 'scenario': 2040, 'value': 40 }, { 'scenario': 2050, 'value': 13 }],
-    'nace04': [{ 'scenario': 2025, 'value': 40 }, { 'scenario': 2030, 'value': 10 }, { 'scenario': 2040, 'value': 30 }, { 'scenario': 2050, 'value': 23 }],
-    'nace05': [{ 'scenario': 2025, 'value': 70 }, { 'scenario': 2030, 'value': 80 }, { 'scenario': 2040, 'value': 20 }, { 'scenario': 2050, 'value': 63 }],
-    'nace06': [{ 'scenario': 2025, 'value': 80 }, { 'scenario': 2030, 'value': 30 }, { 'scenario': 2040, 'value': 10 }, { 'scenario': 2050, 'value': 73 }]
-};
+// const objetoEjemplo = {
+//     'nace01': [{ 'scenario': 2025, 'value': 10 }, { 'scenario': 2030, 'value': 40 }, { 'scenario': 2040, 'value': 60 }, { 'scenario': 2050, 'value': 83 }],
+//     'nace02': [{ 'scenario': 2025, 'value': 20 }, { 'scenario': 2030, 'value': 20 }, { 'scenario': 2040, 'value': 50 }, { 'scenario': 2050, 'value': 93 }],
+//     'nace03': [{ 'scenario': 2025, 'value': 30 }, { 'scenario': 2030, 'value': 90 }, { 'scenario': 2040, 'value': 40 }, { 'scenario': 2050, 'value': 13 }],
+//     'nace04': [{ 'scenario': 2025, 'value': 40 }, { 'scenario': 2030, 'value': 10 }, { 'scenario': 2040, 'value': 30 }, { 'scenario': 2050, 'value': 23 }],
+//     'nace05': [{ 'scenario': 2025, 'value': 70 }, { 'scenario': 2030, 'value': 80 }, { 'scenario': 2040, 'value': 20 }, { 'scenario': 2050, 'value': 63 }],
+//     'nace06': [{ 'scenario': 2025, 'value': 80 }, { 'scenario': 2030, 'value': 30 }, { 'scenario': 2040, 'value': 10 }, { 'scenario': 2050, 'value': 73 }]
+// };
 
 // continue button onclick
 nextStepButton.addEventListener('click', (e) => {
@@ -22,15 +22,23 @@ nextStepButton.addEventListener('click', (e) => {
         return acc;
     }, []);
 
-    let data = objetoEjemplo;
+    createHeatmap(deltas);
+});
+
+async function createHeatmap(deltas) {
+    const response = await fetch("http://127.0.0.1:3000/heatmap/createHeatmap/" + HEATMAP_TIMESTAMP);
+    let data = await response.json();
+
     let dataTransformed = transformDataToHeatmap(data);
     let categories = getCategories(data); // [x, y]
     console.log(dataTransformed);
     console.log(categories);
     loadChart(deltas, dataTransformed, categories[0], categories[1]);
-});
+}
 
 function transformDataToHeatmap(obj) {
+    console.log("se viene");
+    console.log(obj);
     let heatmapMatrix = [];
     let y = 0;
 

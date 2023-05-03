@@ -5,7 +5,7 @@ const multer = require('multer');
 const Escenario = require('../models/Escenario');
 
 let upload = multer();
-router.post('/saveEscenario', upload.single('escenario'), (req, res) => {
+router.post('/saveEscenario', upload.single('csvFile'), (req, res) => {
     const idHeatmap = req.body.Idheatmap;
     let myCSV = req.file.buffer.toString('utf8');
     let jsonFile = convertCsvToJson(myCSV);
@@ -17,9 +17,9 @@ router.post('/saveEscenario', upload.single('escenario'), (req, res) => {
         name: name,
         region: region,
         variable: variable,
-        IdHeatmap:idHeatmap
+        IdHeatmap: idHeatmap
     };
-    
+
 
     Escenario.findOne(key)
         .then(escenario => {
@@ -37,7 +37,7 @@ router.post('/saveEscenario', upload.single('escenario'), (req, res) => {
                     variable,
                     unit,
                     steps,
-                    IdHeatmap:idHeatmap
+                    IdHeatmap: idHeatmap
 
                 });
 

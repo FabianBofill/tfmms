@@ -91,6 +91,7 @@ function uploadFile(dropzone, file) {
 
     var formData = new FormData();
     formData.append("csvFile", file);
+    formData.append("Idheatmap", HEATMAP_TIMESTAMP);
     xhr.send(formData);
 }
 

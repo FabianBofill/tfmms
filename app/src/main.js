@@ -1,4 +1,5 @@
-let SERVICE_ENDPOINT = '';
+let SERVICE_ENDPOINT = 'emision/saveEmision';
+let HEATMAP_TIMESTAMP = '';
 
 // Add disbled class to titleHeatmapContainer if there is no items
 const titleHeatmapContainer = document.querySelector('.container-heatmap-list .title-h2');
@@ -42,4 +43,7 @@ buttonCreateHeatMap.addEventListener('click', () => {
         heatmapView.classList.add('hide');
         heatmapCreateView.classList.remove('hide');
     }, 400);
+
+    // Generate timestamp id
+    HEATMAP_TIMESTAMP = Date.now().toString();
 });
