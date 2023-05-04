@@ -49,9 +49,7 @@ router.get('/createHeatmap/:Idheatmap', (req, res) => {
                 /*END FIND SECTORS*/
                 const yearsSet = [];
 
-
                 subsectorFactorsMap.forEach(function(key, value) {
-
                     key.percentage = key.factor / totalFactor;
                     // const newValue=value;
                     escenariopMap.forEach(function(rate, year) {
@@ -65,8 +63,8 @@ router.get('/createHeatmap/:Idheatmap', (req, res) => {
 
                 let resHeat = {};
                 subsectorFactorsMap.forEach(function(key, value) {
-                    for (let i = 0; i < yearsSet.length - 1; i++) {
-                        key[yearsSet[i + 1]] = (((yearsSet[i + 1] - yearsSet[i]) / yearsSet[i]) * key.percentage);
+                    for (let i = yearsSet.length - 1; i > 0; i--) {
+                        key[yearsSet[i]] = (((key[yearsSet[i]] - key[yearsSet[i - 1]]) / key[yearsSet[i - 1]]) * key.percentage);
                     }
 
                 });
@@ -79,11 +77,9 @@ router.get('/createHeatmap/:Idheatmap', (req, res) => {
                         dataArray.push(dataObject);
                     }
                     resHeat[key] = dataArray;
-
                 }
 
-
-                console.log(resHeat);
+                // console.log(resHeat);
                 res.json(resHeat);
 
             });

@@ -31,14 +31,10 @@ async function createHeatmap(deltas) {
 
     let dataTransformed = transformDataToHeatmap(data);
     let categories = getCategories(data); // [x, y]
-    console.log(dataTransformed);
-    console.log(categories);
     loadChart(deltas, dataTransformed, categories[0], categories[1]);
 }
 
 function transformDataToHeatmap(obj) {
-    console.log("se viene");
-    console.log(obj);
     let heatmapMatrix = [];
     let y = 0;
 
