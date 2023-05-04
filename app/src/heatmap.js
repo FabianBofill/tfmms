@@ -1,12 +1,3 @@
-// const objetoEjemplo = {
-//     'nace01': [{ 'scenario': 2025, 'value': 10 }, { 'scenario': 2030, 'value': 40 }, { 'scenario': 2040, 'value': 60 }, { 'scenario': 2050, 'value': 83 }],
-//     'nace02': [{ 'scenario': 2025, 'value': 20 }, { 'scenario': 2030, 'value': 20 }, { 'scenario': 2040, 'value': 50 }, { 'scenario': 2050, 'value': 93 }],
-//     'nace03': [{ 'scenario': 2025, 'value': 30 }, { 'scenario': 2030, 'value': 90 }, { 'scenario': 2040, 'value': 40 }, { 'scenario': 2050, 'value': 13 }],
-//     'nace04': [{ 'scenario': 2025, 'value': 40 }, { 'scenario': 2030, 'value': 10 }, { 'scenario': 2040, 'value': 30 }, { 'scenario': 2050, 'value': 23 }],
-//     'nace05': [{ 'scenario': 2025, 'value': 70 }, { 'scenario': 2030, 'value': 80 }, { 'scenario': 2040, 'value': 20 }, { 'scenario': 2050, 'value': 63 }],
-//     'nace06': [{ 'scenario': 2025, 'value': 80 }, { 'scenario': 2030, 'value': 30 }, { 'scenario': 2040, 'value': 10 }, { 'scenario': 2050, 'value': 73 }]
-// };
-
 // continue button onclick
 nextStepButton.addEventListener('click', (e) => {
     e.preventDefault();
@@ -97,8 +88,9 @@ function loadChart(deltas, data, categoriesX, categoriesY) {
         chart: {
             type: 'heatmap',
             marginTop: 40,
-            marginBottom: 100,
-            plotBorderWidth: 0
+            marginBottom: 90,
+            plotBorderWidth: 0,
+            height: '540px',
         },
 
         title: {
@@ -122,10 +114,10 @@ function loadChart(deltas, data, categoriesX, categoriesY) {
         colorAxis: {
             dataClasses: [{
                 color: '#ffffff',
-                to: 1
+                to: 0
             }, {
                 color: '#fffdd0',
-                from: 1,
+                from: 0,
                 to: deltas[0]
             }, {
                 color: '#ffff76 ',
@@ -165,7 +157,7 @@ function loadChart(deltas, data, categoriesX, categoriesY) {
         series: [{
             name: 'direct emission risk',
             borderWidth: 1,
-            borderColor: '#4c4c4c ',
+            borderColor: '#000000 ',
             data: data,
             dataLabels: {
                 enabled: false,

@@ -64,7 +64,7 @@ router.get('/createHeatmap/:Idheatmap', (req, res) => {
                 let resHeat = {};
                 subsectorFactorsMap.forEach(function(key, value) {
                     for (let i = yearsSet.length - 1; i > 0; i--) {
-                        key[yearsSet[i]] = (((key[yearsSet[i]] - key[yearsSet[i - 1]]) / key[yearsSet[i - 1]]) * key.percentage);
+                        key[yearsSet[i]] = (((key[yearsSet[i]] - key[yearsSet[i - 1]]) / key[yearsSet[i - 1]]) * key.percentage) * 100;
                     }
 
                 });
